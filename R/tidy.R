@@ -6,6 +6,7 @@ tidy <- function(dat) {
   colnames(dat) <- tolower(colnames(dat))
   colnames(dat)[colnames(dat) == "x"] <- "currency"
   colnames(dat)[colnames(dat) == "data"] <- "date"
+  colnames(dat) <- sub("\\.", "_", colnames(dat))
 
   dat_sub <- dat[, setdiff(colnames(dat), "x.1")]
 
@@ -42,11 +43,11 @@ tidy <- function(dat) {
   }
 
   # Remove balance rows that are not actual transactions using regex
-  if ("descrizione.operazione" %in% colnames(dat_sub)) {
+  if ("descrizione_operazione" %in% colnames(dat_sub)) {
     balance_pattern <- "^(Saldo contabile|Saldo liquido|Disponibilit\u00e0 al|Saldo SBF per conti unici al|Saldo iniziale)"
     exclude_rows <- grepl(
       balance_pattern,
-      dat_sub[["descrizione.operazione"]],
+      dat_sub[["descrizione_operazione"]],
       perl = TRUE
     )
     dat_sub <- dat_sub[!exclude_rows, ]
