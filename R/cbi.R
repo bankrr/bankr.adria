@@ -6,7 +6,7 @@ validate_line <- function(x) {
 }
 
 validate_header_code <- function(x) {
-  stringr::str_detect(x, "^RH\\d{5}[A-Z0-9]{5}\\d{6}[A-Z0-9]{20,27}$")
+  grepl("^RH\\d{5}[A-Z0-9]{5}\\d{6}[A-Z0-9]{20,27}$", x)
 }
 
 header_code <- function(x) {
@@ -14,7 +14,7 @@ header_code <- function(x) {
   if (!validate_header_code(x)) {
     stop("Input is not header code")
   }
-  stringr::str_sub(x, 1L, 2L)
+  substr(x, 1L, 2L)
 }
 
 bank_code <- function(x) {
@@ -22,7 +22,7 @@ bank_code <- function(x) {
   if (!validate_header_code(x)) {
     stop("Input is not header code")
   }
-  stringr::str_sub(x, 3L, 7L)
+  substr(x, 3L, 7L)
 }
 
 company_code <- function(x) {
@@ -30,7 +30,7 @@ company_code <- function(x) {
   if (!validate_header_code(x)) {
     stop("Input is not header code")
   }
-  stringr::str_sub(x, 8L, 12L)
+  substr(x, 8L, 12L)
 }
 
 date <- function(x) {
@@ -38,7 +38,7 @@ date <- function(x) {
   if (!validate_header_code(x)) {
     stop("Input is not header code")
   }
-  stringr::str_sub(x, 13L, 18L)
+  substr(x, 13L, 18L)
 }
 
 account_number <- function(x) {
@@ -46,5 +46,5 @@ account_number <- function(x) {
   if (!validate_header_code(x)) {
     stop("Input is not header code")
   }
-  stringr::str_sub(x, 19, nchar(x))
+  substr(x, 19, nchar(x))
 }
