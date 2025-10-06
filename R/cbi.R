@@ -6,7 +6,7 @@ validate_line <- function(x) {
 }
 
 validate_header_code <- function(x) {
-  grepl("^RH\\d{5}[A-Z0-9]{5}\\d{6}[A-Z0-9]{20,27}$", x)
+  grepl(header_code_pattern(), x)
 }
 
 header_code <- function(x) {
