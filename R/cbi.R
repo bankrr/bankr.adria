@@ -5,7 +5,7 @@ validate_line <- function(x) {
   FALSE
 }
 
-validate_header_code <- function(x) {
+is_header_code <- function(x) {
   grepl(header_code_pattern(), x)
 }
 
