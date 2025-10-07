@@ -152,11 +152,11 @@ validate_cbi <- function(x) {
     )
   }
 
-  if (!is_header(x[[1L]])) {
+  if (!is_header(x[[CBI_HEADER_IDX]])) {
     stop("First row is not a header record")
   }
 
-  if (!is_summary(x[[2L]])) {
+  if (!is_summary(x[[CBI_SUMMARY_IDX]])) {
     stop("Second row is not a summary record")
   }
 
@@ -164,8 +164,8 @@ validate_cbi <- function(x) {
     seq_along(x),
     function(i) {
       ln <- x[[i]]
-      # Skip header (1), summary (2), closing (n-1), footer (n)
-      if (i <= 2L || i >= length(x) - 1L) {
+      # Skip header, summary, closing (n-1), footer (n)
+      if (i < CBI_FIRST_TRANSACTION_IDX || i >= length(x) - 1L) {
         return(TRUE)
       }
       is_transaction(ln) || is_continuation(ln)

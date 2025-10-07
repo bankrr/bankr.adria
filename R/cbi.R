@@ -5,6 +5,12 @@ validate_line <- function(x) {
   FALSE
 }
 
+# CBI file structure constants ----
+
+CBI_HEADER_IDX <- 1L
+CBI_SUMMARY_IDX <- 2L
+CBI_FIRST_TRANSACTION_IDX <- 3L
+
 # Header code ----
 
 is_header <- function(x) {
