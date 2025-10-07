@@ -55,3 +55,32 @@ tidy <- function(dat) {
 
   dat_sub
 }
+
+tidy_cbi <- function(x) {
+  stopifnot(is.character(x))
+
+  trans <- x[is_transaction(x) | is_continuation(x)]
+  dat <- data.frame(
+    id = xtr_record_number(trans),
+    date_transaction = as_date(xtr_transaction_date(trans)),
+    date_value = as_date(xtr_value_date(trans)),
+    credit_debit = xtr_debit_credit(trans),
+    description = trimws(xtr_description(trans), "both"),
+    amount = as.numeric(gsub(",", ".", xtr_amount(trans))),
+    stringsAsFactors = FALSE
+  )
+
+  dat$amount <- ifelse(
+    dat$credit_debit == "D" & !is.na(dat$credit_debit),
+    -dat$amount,
+    dat$amount
+  )
+
+  out <- dat[, setdiff(names(dat), "credit_debit"), drop = FALSE]
+
+  if (is_pkg_avail("tibble")) {
+    out <- tibble::as_tibble(flatten(out))
+  }
+
+  out
+}
