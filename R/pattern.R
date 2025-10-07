@@ -21,7 +21,7 @@ pattern_closing <- function() {
     "\\d{13,15}", # Amount with implied decimals (13-15 digits)
     "[CD]", # Final balance flag (C or D)
     "\\d{13,15}", # Final balance amount (13-15 digits)
-    "\\s{0,}", # Optional spaces (padding)
+    "\\s*", # Optional spaces (padding)
     "$"
   )
 }
