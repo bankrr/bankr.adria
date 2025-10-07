@@ -60,6 +60,14 @@ is_transaction <- function(x) {
   grepl(pattern_transaction(), x)
 }
 
+is_debit <- function(x) {
+  grepl(pattern_debit(), x)
+}
+
+is_credit <- function(x) {
+  grepl(pattern_credit(), x)
+}
+
 # Continuation record ----
 
 is_continuation <- function(x) {

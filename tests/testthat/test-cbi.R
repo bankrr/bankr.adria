@@ -43,3 +43,15 @@ test_that("is_transaction works", {
     "620000001001040625040625D000000000456,1026                                           DISPOSIZIONE BONIFICO - SCT Coordi"
   ))
 })
+
+test_that("is_credit works", {
+  expect_true(is_credit(
+    "620000001003110625110625C000000000211,2648"
+  ))
+})
+
+test_that("is_debit works", {
+  expect_true(is_debit(
+    "620000001001040625040625D000000000456,1026"
+  ))
+})

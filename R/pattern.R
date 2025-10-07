@@ -132,6 +132,28 @@ pattern_transaction <- function() {
   )
 }
 
+pattern_debit <- function() {
+  paste0(
+    "^62", # Transaction record
+    "\\d{7}", # Sequential record number
+    "\\d{3}", # Transaction number
+    "\\d{6}", # Transaction date
+    "\\d{6}", # Value date
+    "D" # Debit flag
+  )
+}
+
+pattern_credit <- function() {
+  paste0(
+    "^62", # Transaction record
+    "\\d{7}", # Sequential record number
+    "\\d{3}", # Transaction number
+    "\\d{6}", # Transaction date
+    "\\d{6}", # Value date
+    "C" # Credit flag
+  )
+}
+
 pattern_continuation <- function() {
   paste0(
     "^63", # Record type (continuation)
