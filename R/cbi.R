@@ -148,12 +148,24 @@ xtr_value_date <- function(x) {
 }
 
 xtr_description <- function(x) {
-  m <- regexec(pattern_transaction(capture = TRUE), x)
-  matches <- regmatches(x, m)
-  # Capture group [9] is description (variable length text)
+  pattern <- ifelse(
+    is_transaction(x),
+    pattern_transaction(capture = TRUE),
+    pattern_continuation(capture = TRUE)
+  )
+
   vapply(
-    matches,
-    function(m) if (length(m) > 9) m[10] else NA_character_,
+    seq_along(x),
+    function(i) {
+      m <- regexec(pattern[i], x[i])
+      matches <- regmatches(x[i], m)[[1]]
+      # Capture group [10] is description for transaction, [4] for continuation
+      if (is_transaction(x[i])) {
+        if (length(matches) > 9) matches[10] else NA_character_
+      } else {
+        if (length(matches) > 3) matches[4] else NA_character_
+      }
+    },
     character(1),
     USE.NAMES = FALSE
   )
