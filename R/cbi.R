@@ -83,12 +83,19 @@ is_continuation <- function(x) {
 # Extract transaction fields ----
 
 xtr_record_number <- function(x) {
-  m <- regexec(pattern_transaction(capture = TRUE), x)
-  matches <- regmatches(x, m)
-  # Capture group [3] is transaction_number (3 digits)
+  pattern <- ifelse(
+    is_transaction(x),
+    pattern_transaction(capture = TRUE),
+    pattern_continuation(capture = TRUE)
+  )
+
   vapply(
-    matches,
-    function(m) if (length(m) > 2) m[3] else NA_character_,
+    seq_along(x),
+    function(i) {
+      m <- regexec(pattern[i], x[i])
+      matches <- regmatches(x[i], m)[[1]]
+      if (length(matches) > 2) matches[3] else NA_character_
+    },
     character(1),
     USE.NAMES = FALSE
   )
