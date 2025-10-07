@@ -23,8 +23,9 @@ pad_str <- function(x, nchar_tot = 120L) {
   }
 
   if (!is_odd(length(x))) {
+    n <- pad_calc(x[[1]], x[[2]], nchar_tot = nchar_tot)
     pad <- paste0(
-      character(pad_calc(x[[1]], x[[2]], nchar_tot = nchar_tot)),
+      character(n),
       collapse = " "
     )
   }
