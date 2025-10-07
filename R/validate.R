@@ -137,11 +137,9 @@ validate_cbi <- function(x) {
     "`x` should have at least one item" = length(x) > 0
   )
 
-  valid_len <- vapply(
+  valid_len <- lgl_ply(
     x,
-    validate_line,
-    FUN.VALUE = logical(1),
-    USE.NAMES = FALSE
+    validate_line
   )
 
   invalid_idx <- which(!valid_len)
@@ -168,7 +166,7 @@ validate_cbi <- function(x) {
     stop("Last row is not a footer record")
   }
 
-  invalid_trans <- vapply(
+  invalid_trans <- lgl_ply(
     seq_along(x),
     function(i) {
       ln <- x[[i]]
@@ -177,9 +175,7 @@ validate_cbi <- function(x) {
         return(TRUE)
       }
       is_transaction(ln) || is_continuation(ln)
-    },
-    FUN.VALUE = logical(1),
-    USE.NAMES = FALSE
+    }
   )
 
   invalid_trans_idx <- which(!invalid_trans)
