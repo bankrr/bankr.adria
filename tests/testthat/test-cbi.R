@@ -1,5 +1,6 @@
 test_that("is_header_code works", {
-  expect_true(is_header_code("RH08982AEN6D080825INBK5389029800100606"))
+  x <- pad_str(c("RH08982AEN6D080825INBK5389029800100606", "08982"))
+  expect_true(is_header_code(x))
 })
 
 test_that("header_code works", {
