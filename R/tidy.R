@@ -56,6 +56,10 @@ tidy <- function(dat) {
   dat_sub
 }
 
+#' Tidy CBI
+#' @param x A character vector as returned by [read_cbi()].
+#' @return A data frame
+#' @export
 tidy_cbi <- function(x) {
   stopifnot(is.character(x))
 

@@ -9,6 +9,9 @@ read(path)
 \arguments{
 \item{path}{A path.}
 }
+\value{
+A data frame
+}
 \description{
 Read bank statement
 }

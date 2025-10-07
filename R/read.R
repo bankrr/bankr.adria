@@ -1,5 +1,6 @@
 #' Read bank statement
 #' @param path A path.
+#' @return A data frame
 #' @export
 read <- function(path) {
   if (!(is.character(path) && length(path) == 1)) {
@@ -13,6 +14,7 @@ read <- function(path) {
 
 #' Read CBI
 #' @param path A path.
+#' @return A character vector
 #' @export
 read_cbi <- function(path) {
   if (!(is.character(path) && length(path) == 1)) {

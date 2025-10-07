@@ -9,6 +9,9 @@ read_cbi(path)
 \arguments{
 \item{path}{A path.}
 }
+\value{
+A character vector
+}
 \description{
 Read CBI
 }
