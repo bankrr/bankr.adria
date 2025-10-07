@@ -1,4 +1,4 @@
-header_code_pattern <- function() {
+pattern_header <- function() {
   paste0(
     "^RH", # Record type
     "\\d{5}", # Bank code (5 digits)
@@ -11,7 +11,7 @@ header_code_pattern <- function() {
   )
 }
 
-closing_record_pattern <- function() {
+pattern_closing <- function() {
   paste0(
     "^64", # Record type (closing balance)
     "\\d{7}", # Progressive number (7 digits)
@@ -27,7 +27,7 @@ closing_record_pattern <- function() {
 }
 
 # Alternative with more specific amount format (assuming 2 decimal places)
-closing_record_pattern_detailed <- function() {
+pattern_closing_detailed <- function() {
   paste0(
     "^64", # Record type
     "(\\d{7})", # Progressive number
@@ -43,7 +43,7 @@ closing_record_pattern_detailed <- function() {
 }
 
 # CBI uses implied decimals, not commas (?)
-closing_record_pattern_with_commas <- function() {
+pattern_closing_with_commas <- function() {
   paste0(
     "^64", # Record type
     "\\d{7}", # Progressive number
@@ -58,7 +58,7 @@ closing_record_pattern_with_commas <- function() {
   )
 }
 
-footer_record_pattern <- function() {
+pattern_footer <- function() {
   paste0(
     "^EF", # Record type (End File)
     "\\d{5}", # Bank code (5 digits)
@@ -77,7 +77,7 @@ footer_record_pattern <- function() {
 }
 
 # Detailed version with capture groups
-footer_record_pattern_detailed <- function() {
+pattern_footer_detailed <- function() {
   paste0(
     "^EF", # Record type
     "(\\d{5})", # Bank code
@@ -95,7 +95,7 @@ footer_record_pattern_detailed <- function() {
   )
 }
 
-summary_record_pattern <- function() {
+pattern_summary <- function() {
   paste0(
     "^61", # Record type (opening balance)
     "\\d{7}", # Progressive number (7 digits)
@@ -116,6 +116,6 @@ summary_record_pattern <- function() {
   )
 }
 
-transaction_record_pattern <- function() "^62"
+pattern_transaction <- function() "^62"
 
-continuation_record__pattern <- function() "^63\\d{7}"
+pattern_continuation <- function() "^63\\d{7}"
