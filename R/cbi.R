@@ -7,7 +7,7 @@ validate_line <- function(x) {
 
 # Header code ----
 
-is_header_code <- function(x) {
+is_header <- function(x) {
   grepl(pattern_header(), x)
 }
 
@@ -38,19 +38,19 @@ account_number <- function(x) {
 
 # Summary record ----
 
-is_summary_record <- function(x) {
+is_summary <- function(x) {
   grepl(pattern_summary(), x)
 }
 
 # Closing record ----
 
-is_closing_record <- function(x) {
+is_closing <- function(x) {
   grepl(pattern_closing_with_commas(), x)
 }
 
 # Footer record ----
 
-is_footer_record <- function(x) {
+is_footer <- function(x) {
   grepl(pattern_footer(), x)
 }
 
@@ -62,6 +62,6 @@ is_transaction <- function(x) {
 
 # Continuation record ----
 
-is_continuation_record <- function(x) {
+is_continuation <- function(x) {
   grepl(pattern_continuation(), x)
 }

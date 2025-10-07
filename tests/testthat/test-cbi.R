@@ -1,6 +1,6 @@
-test_that("is_header_code works", {
+test_that("is_header works", {
   x <- pad_str(c("RH08982AEN6D080825INBK5389029800100606", "08982"))
-  expect_true(is_header_code(x))
+  expect_true(is_header(x))
 })
 
 test_that("header_code works", {
@@ -26,14 +26,14 @@ test_that("account_number works", {
   )
 })
 
-test_that("is_closing_record works", {
-  expect_true(is_closing_record(
+test_that("is_closing works", {
+  expect_true(is_closing(
     "640000001EUR080825C000000014642,37C000000014642,37"
   ))
 })
 
-test_that("is_footer_record works", {
-  expect_true(is_footer_record(
+test_that("is_footer works", {
+  expect_true(is_footer(
     "EF08982AEN6D080825INBK5389029800100606      0000001                              0000321                         080825"
   ))
 })
