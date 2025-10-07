@@ -18,13 +18,9 @@ read_cbi <- function(path) {
   if (!(is.character(path) && length(path) == 1)) {
     stop("Path is not a character of length one.")
   }
-  out <- readLines(path)
+  x <- readLines(path)
 
-  nc <- vapply(out, nchar, FUN.VALUE = integer(1), USE.NAMES = FALSE)
-
-  if (any(nc != 120L)) {
-    stop("Some lines does not contain 120 characters")
-  }
+  out <- validate_cbi(x)
 
   out
 }

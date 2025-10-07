@@ -130,3 +130,43 @@ validate <- function(dat) {
 
   invisible(TRUE)
 }
+
+validate_cbi <- function(x) {
+  stopifnot(
+    "`x` is not a character vector" = is.character(x),
+    "`x` should have at least one item" = length(x) > 0
+  )
+
+  valid_len <- vapply(
+    x,
+    validate_line,
+    FUN.VALUE = logical(1),
+    USE.NAMES = FALSE
+  )
+
+  invalid_idx <- which(!valid_len)
+  if (length(invalid_idx)) {
+    stop(
+      sprintf("The following lines does have 120 characters: %s"),
+      paste0(invalid_idx, collapse = ", ")
+    )
+  }
+
+  if (!is_header(x[[1L]])) {
+    stop("First row is not a header record")
+  }
+
+  if (!is_summary(x[[2L]])) {
+    stop("Second row is not a summary record")
+  }
+
+  if (!is_closing(x[[length(x) - 1]])) {
+    stop("Second-last row is not a closing record")
+  }
+
+  if (!is_footer(x[[length(x)]])) {
+    stop("Last row is not a footer record")
+  }
+
+  invisible(x)
+}
