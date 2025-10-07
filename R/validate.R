@@ -160,6 +160,14 @@ validate_cbi <- function(x) {
     stop("Second row is not a summary record")
   }
 
+  if (!is_closing(x[[length(x) - 1]])) {
+    stop("Second-last row is not a closing record")
+  }
+
+  if (!is_footer(x[[length(x)]])) {
+    stop("Last row is not a footer record")
+  }
+
   invalid_trans <- vapply(
     seq_along(x),
     function(i) {
@@ -182,14 +190,6 @@ validate_cbi <- function(x) {
         paste0(invalid_trans_idx, collapse = ", ")
       )
     )
-  }
-
-  if (!is_closing(x[[length(x) - 1]])) {
-    stop("Second-last row is not a closing record")
-  }
-
-  if (!is_footer(x[[length(x)]])) {
-    stop("Last row is not a footer record")
   }
 
   invisible(x)
