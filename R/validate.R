@@ -160,6 +160,30 @@ validate_cbi <- function(x) {
     stop("Second row is not a summary record")
   }
 
+  invalid_trans <- vapply(
+    seq_along(x),
+    function(i) {
+      ln <- x[[i]]
+      # Skip header (1), summary (2), closing (n-1), footer (n)
+      if (i <= 2L || i >= length(x) - 1L) {
+        return(TRUE)
+      }
+      is_transaction(ln) || is_continuation(ln)
+    },
+    FUN.VALUE = logical(1),
+    USE.NAMES = FALSE
+  )
+
+  invalid_trans_idx <- which(!invalid_trans)
+  if (length(invalid_trans_idx)) {
+    stop(
+      sprintf(
+        "The following lines are not valid transactions or continuation rows: %s",
+        paste0(invalid_trans_idx, collapse = ", ")
+      )
+    )
+  }
+
   if (!is_closing(x[[length(x) - 1]])) {
     stop("Second-last row is not a closing record")
   }
