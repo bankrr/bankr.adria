@@ -1,6 +1,6 @@
 pattern_header <- function() {
   paste0(
-    "^RH", # Record type
+    "^\\s?RH", # Record type
     "\\d{5}", # Bank code (5 digits)
     "[A-Z0-9]{5}", # Company code (5 alphanumeric)
     "\\d{6}", # Date DDMMYY (6 digits)
@@ -13,7 +13,7 @@ pattern_header <- function() {
 
 pattern_closing <- function() {
   paste0(
-    "^64", # Record type (closing balance)
+    "^\\s?64", # Record type (closing balance)
     "\\d{7}", # Progressive number (7 digits)
     "[A-Z]{3}", # Currency code (3 letters, e.g., EUR)
     "\\d{6}", # Date DDMMYY (6 digits)
@@ -29,7 +29,7 @@ pattern_closing <- function() {
 # Alternative with more specific amount format (assuming 2 decimal places)
 pattern_closing_detailed <- function() {
   paste0(
-    "^64", # Record type
+    "^\\s?64", # Record type
     "(\\d{7})", # Progressive number
     "([A-Z]{3})", # Currency code
     "(\\d{6})", # Date DDMMYY
@@ -45,7 +45,7 @@ pattern_closing_detailed <- function() {
 # CBI uses implied decimals, not commas (?)
 pattern_closing_with_commas <- function() {
   paste0(
-    "^64", # Record type
+    "^\\s?64", # Record type
     "\\d{7}", # Progressive number
     "[A-Z]{3}", # Currency code
     "\\d{6}", # Date
@@ -60,7 +60,7 @@ pattern_closing_with_commas <- function() {
 
 pattern_footer <- function() {
   paste0(
-    "^EF", # Record type (End File)
+    "^\\s?EF", # Record type (End File)
     "\\d{5}", # Bank code (5 digits)
     "[A-Z0-9]{5}", # Company code (5 alphanumeric)
     "\\d{6}", # Date DDMMYY (6 digits)
@@ -79,7 +79,7 @@ pattern_footer <- function() {
 # Detailed version with capture groups
 pattern_footer_detailed <- function() {
   paste0(
-    "^EF", # Record type
+    "^\\s?EF", # Record type
     "(\\d{5})", # Bank code
     "([A-Z0-9]{5})", # Company code
     "(\\d{6})", # Date
@@ -97,7 +97,7 @@ pattern_footer_detailed <- function() {
 
 pattern_summary <- function() {
   paste0(
-    "^61", # Record type (opening balance)
+    "^\\s?61", # Record type (opening balance)
     "\\d{7}", # Progressive number (7 digits)
     "\\s*", # Spaces
     "\\d{7}", # Sequential number (7 digits)
@@ -118,7 +118,7 @@ pattern_summary <- function() {
 
 pattern_transaction <- function() {
   paste0(
-    "^62", # Record type (transaction)
+    "^\\s?62", # Record type (transaction)
     "\\d{7}", # Sequential record number (7 digits)
     "\\d{3}", # Transaction number (3 digits)
     "\\d{6}", # Transaction date DDMMYY (6 digits)
@@ -134,7 +134,7 @@ pattern_transaction <- function() {
 
 pattern_debit <- function() {
   paste0(
-    "^62", # Transaction record
+    "^\\s?62", # Transaction record
     "\\d{7}", # Sequential record number
     "\\d{3}", # Transaction number
     "\\d{6}", # Transaction date
@@ -145,7 +145,7 @@ pattern_debit <- function() {
 
 pattern_credit <- function() {
   paste0(
-    "^62", # Transaction record
+    "^\\s?62", # Transaction record
     "\\d{7}", # Sequential record number
     "\\d{3}", # Transaction number
     "\\d{6}", # Transaction date
@@ -156,7 +156,7 @@ pattern_credit <- function() {
 
 pattern_continuation <- function() {
   paste0(
-    "^63", # Record type (continuation)
+    "^\\s?63", # Record type (continuation)
     "\\d{7}", # Sequential record number (7 digits)
     "\\d{3}", # Transaction number (3 digits) - links to parent 62
     ".*", # Continuation text (variable length)
