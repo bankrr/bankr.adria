@@ -92,48 +92,66 @@ xtr_record_number <- function(x) {
   chr_ply(
     seq_along(x),
     function(i) {
-      m <- regexec(pattern[i], x[i])
-      matches <- regmatches(x[i], m)[[1]]
-      if (length(matches) > 2) matches[[3]] else NA_character_
+      m <- regexec(pattern[[i]], x[[i]], perl = TRUE)
+      matches <- regmatches(x[[i]], m)[[1]]
+      if ("transaction_number" %in% names(matches)) {
+        matches[["transaction_number"]]
+      } else {
+        NA_character_
+      }
     }
   )
 }
 
 xtr_debit_credit <- function(x) {
-  m <- regexec(pattern_transaction(capture = TRUE), x)
-  matches <- regmatches(x, m)
-  chr_ply(
-    matches,
-    function(m) if (length(m) > 5) m[[6]] else NA_character_
-  )
-}
-
-xtr_amount <- function(x) {
-  m <- regexec(pattern_transaction(capture = TRUE), x)
+  m <- regexec(pattern_transaction(capture = TRUE), x, perl = TRUE)
   matches <- regmatches(x, m)
   chr_ply(
     matches,
     function(m) {
-      if (length(m) > 8) paste0(m[[7]], m[[8]]) else NA_character_
+      if ("debit_credit" %in% names(m)) m[["debit_credit"]] else NA_character_
+    }
+  )
+}
+
+xtr_amount <- function(x) {
+  m <- regexec(pattern_transaction(capture = TRUE), x, perl = TRUE)
+  matches <- regmatches(x, m)
+  chr_ply(
+    matches,
+    function(m) {
+      if ("amount_int" %in% names(m) && "amount_dec" %in% names(m)) {
+        paste0(m[["amount_int"]], m[["amount_dec"]])
+      } else {
+        NA_character_
+      }
     }
   )
 }
 
 xtr_transaction_date <- function(x) {
-  m <- regexec(pattern_transaction(capture = TRUE), x)
+  m <- regexec(pattern_transaction(capture = TRUE), x, perl = TRUE)
   matches <- regmatches(x, m)
   chr_ply(
     matches,
-    function(m) if (length(m) > 4) m[[4]] else NA_character_
+    function(m) {
+      if ("transaction_date" %in% names(m)) {
+        m[["transaction_date"]]
+      } else {
+        NA_character_
+      }
+    }
   )
 }
 
 xtr_value_date <- function(x) {
-  m <- regexec(pattern_transaction(capture = TRUE), x)
+  m <- regexec(pattern_transaction(capture = TRUE), x, perl = TRUE)
   matches <- regmatches(x, m)
   chr_ply(
     matches,
-    function(m) if (length(m) > 5) m[[5]] else NA_character_
+    function(m) {
+      if ("value_date" %in% names(m)) m[["value_date"]] else NA_character_
+    }
   )
 }
 
@@ -147,13 +165,12 @@ xtr_description <- function(x) {
   chr_ply(
     seq_along(x),
     function(i) {
-      m <- regexec(pattern[[i]], x[[i]])
+      m <- regexec(pattern[[i]], x[[i]], perl = TRUE)
       matches <- regmatches(x[[i]], m)[[1]]
-      # Capture group [10] is description for transaction, [4] for continuation
-      if (is_transaction(x[[i]])) {
-        if (length(matches) > 9) matches[[10]] else NA_character_
+      if ("description" %in% names(matches)) {
+        matches[["description"]]
       } else {
-        if (length(matches) > 3) matches[[4]] else NA_character_
+        NA_character_
       }
     }
   )
