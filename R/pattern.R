@@ -117,20 +117,78 @@ pattern_summary <- function() {
   )
 }
 
-pattern_transaction <- function() {
-  paste0(
-    "^\\s?62", # Record type (transaction)
-    "\\d{7}", # Sequential record number (7 digits)
-    "\\d{3}", # Transaction number (3 digits)
-    "\\d{6}", # Transaction date DDMMYY (6 digits)
-    "\\d{6}", # Value date DDMMYY (6 digits)
-    "[CD]", # Debit/Credit flag (C or D)
-    "\\d{9,15}", # Amount with implied decimals (9-15 digits)
-    ",?\\d{0,2}", # Optional comma and decimals
-    "\\d{2}", # Transaction code (2 digits)
-    ".*", # Description text (variable length)
-    "$"
+pattern_components <- function() {
+  list(
+    # Common components
+    sequential_record = "\\d{7}", # Sequential record number (7 digits)
+    transaction_number = "\\d{3}", # Transaction number (3 digits)
+
+    # Transaction-specific components
+    record_type_transaction = "62", # Record type (transaction)
+    record_type_continuation = "63", # Record type (continuation)
+    transaction_date = "\\d{6}", # Transaction date DDMMYY (6 digits)
+    value_date = "\\d{6}", # Value date DDMMYY (6 digits)
+    debit_credit_flag = "[CD]", # Debit/Credit flag (C or D)
+    amount_implied = "\\d{9,15}", # Amount with implied decimals (9-15 digits)
+    optional_decimals = ",?\\d{0,2}", # Optional comma and decimals
+    transaction_code = "\\d{2}", # Transaction code (2 digits)
+    description = ".*", # Description text (variable length)
+    continuation_text = ".*" # Continuation text (variable length)
   )
+}
+
+pattern_transaction <- function(capture = FALSE) {
+  p <- pattern_components()
+
+  if (capture) {
+    paste0(
+      "^\\s?",
+      p$record_type_transaction,
+      "(",
+      p$sequential_record,
+      ")",
+      "(",
+      p$transaction_number,
+      ")",
+      "(",
+      p$transaction_date,
+      ")",
+      "(",
+      p$value_date,
+      ")",
+      "(",
+      p$debit_credit_flag,
+      ")",
+      "(",
+      p$amount_implied,
+      ")",
+      "(",
+      p$optional_decimals,
+      ")",
+      "(",
+      p$transaction_code,
+      ")",
+      "(",
+      p$description,
+      ")",
+      "$"
+    )
+  } else {
+    paste0(
+      "^\\s?",
+      p$record_type_transaction,
+      p$sequential_record,
+      p$transaction_number,
+      p$transaction_date,
+      p$value_date,
+      p$debit_credit_flag,
+      p$amount_implied,
+      p$optional_decimals,
+      p$transaction_code,
+      p$description,
+      "$"
+    )
+  }
 }
 
 pattern_debit <- function() {
@@ -155,12 +213,32 @@ pattern_credit <- function() {
   )
 }
 
-pattern_continuation <- function() {
-  paste0(
-    "^\\s?63", # Record type (continuation)
-    "\\d{7}", # Sequential record number (7 digits)
-    "\\d{3}", # Transaction number (3 digits) - links to parent 62
-    ".*", # Continuation text (variable length)
-    "$"
-  )
+pattern_continuation <- function(capture = FALSE) {
+  p <- pattern_components()
+
+  if (capture) {
+    paste0(
+      "^\\s?",
+      p$record_type_continuation,
+      "(",
+      p$sequential_record,
+      ")", # Sequential record number
+      "(",
+      p$transaction_number,
+      ")", # Transaction number - links to parent 62
+      "(",
+      p$continuation_text,
+      ")", # Continuation text
+      "$"
+    )
+  } else {
+    paste0(
+      "^\\s?",
+      p$record_type_continuation,
+      p$sequential_record,
+      p$transaction_number,
+      p$continuation_text,
+      "$"
+    )
+  }
 }
