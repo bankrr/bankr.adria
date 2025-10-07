@@ -1,6 +1,6 @@
-test_that("multiplication works", {
+test_that("tidy_cbi works", {
   x <- readLines(pkg_file("testdata/cbi.txt"))
-  dat <- flatten_cbi(x)
+  dat <- tidy_cbi(x)
   expect_s3_class(dat, "data.frame")
   expect_equal(nrow(dat), 3L)
 })
