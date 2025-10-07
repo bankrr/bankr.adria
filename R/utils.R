@@ -6,6 +6,11 @@ as_date <- function(x) {
   as.Date(x, format = "%d%m%y")
 }
 
+xtr_match <- function(text, pattern) {
+  m <- regexec(pattern, text, perl = TRUE)
+  regmatches(text, m)
+}
+
 flatten <- function(dat) {
   stopifnot(is.data.frame(dat))
   aggregate(
