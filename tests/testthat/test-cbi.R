@@ -55,3 +55,15 @@ test_that("is_debit works", {
     "620000001001040625040625D000000000456,1026"
   ))
 })
+
+test_that("is_summary works", {
+  expect_true(is_summary(
+    " 610000001             0000093001                14A0898262320034000000459EUR010625C000000002398,44IT61                 "
+  ))
+})
+
+test_that("is_continuation works", {
+  expect_true(is_continuation(
+    " 630000001001nate benef: IT91W0398282920031000001999 A fav: I.E. Timpanni srl - Via 7 X.lli zervi, 99 - Abano Terme ID.M"
+  ))
+})
