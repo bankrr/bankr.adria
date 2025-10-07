@@ -25,3 +25,15 @@ test_that("account_number works", {
     "INBK5389029800100606"
   )
 })
+
+test_that("is_closing_record works", {
+  expect_true(is_closing_record(
+    "640000001EUR080825C000000014642,37C000000014642,37"
+  ))
+})
+
+test_that("is_footer_record works", {
+  expect_true(is_footer_record(
+    "EF08982AEN6D080825INBK5389029800100606      0000001                              0000321                         080825"
+  ))
+})
