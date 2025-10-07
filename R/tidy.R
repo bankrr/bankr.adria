@@ -53,6 +53,10 @@ tidy <- function(dat) {
     dat_sub <- dat_sub[!exclude_rows, ]
   }
 
+  if (is_pkg_avail("tibble")) {
+    dat_sub <- tibble::as_tibble(dat_sub)
+  }
+
   dat_sub
 }
 
