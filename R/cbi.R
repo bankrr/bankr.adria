@@ -79,3 +79,75 @@ is_credit <- function(x) {
 is_continuation <- function(x) {
   grepl(pattern_continuation(), x)
 }
+
+# Extract transaction fields ----
+
+xtr_record_number <- function(x) {
+  m <- regexec(pattern_transaction(capture = TRUE), x)
+  matches <- regmatches(x, m)
+  # Capture group [3] is transaction_number (3 digits)
+  vapply(
+    matches,
+    function(m) if (length(m) > 2) m[3] else NA_character_,
+    character(1),
+    USE.NAMES = FALSE
+  )
+}
+
+xtr_debit_credit <- function(x) {
+  m <- regexec(pattern_transaction(capture = TRUE), x)
+  matches <- regmatches(x, m)
+  vapply(
+    matches,
+    function(m) if (length(m) > 5) m[6] else NA_character_,
+    character(1),
+    USE.NAMES = FALSE
+  )
+}
+
+xtr_amount <- function(x) {
+  m <- regexec(pattern_transaction(capture = TRUE), x)
+  matches <- regmatches(x, m)
+  vapply(
+    matches,
+    function(m) {
+      if (length(m) > 8) paste0(m[7], m[8]) else NA_character_
+    },
+    character(1),
+    USE.NAMES = FALSE
+  )
+}
+
+xtr_transaction_date <- function(x) {
+  m <- regexec(pattern_transaction(capture = TRUE), x)
+  matches <- regmatches(x, m)
+  vapply(
+    matches,
+    function(m) if (length(m) > 4) m[4] else NA_character_,
+    character(1),
+    USE.NAMES = FALSE
+  )
+}
+
+xtr_value_date <- function(x) {
+  m <- regexec(pattern_transaction(capture = TRUE), x)
+  matches <- regmatches(x, m)
+  vapply(
+    matches,
+    function(m) if (length(m) > 5) m[5] else NA_character_,
+    character(1),
+    USE.NAMES = FALSE
+  )
+}
+
+xtr_description <- function(x) {
+  m <- regexec(pattern_transaction(capture = TRUE), x)
+  matches <- regmatches(x, m)
+  # Capture group [9] is description (variable length text)
+  vapply(
+    matches,
+    function(m) if (length(m) > 9) m[10] else NA_character_,
+    character(1),
+    USE.NAMES = FALSE
+  )
+}
