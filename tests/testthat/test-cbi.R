@@ -37,3 +37,9 @@ test_that("is_footer_record works", {
     "EF08982AEN6D080825INBK5389029800100606      0000001                              0000321                         080825"
   ))
 })
+
+test_that("is_transaction works", {
+  expect_true(is_transaction(
+    "620000001001040625040625D000000000456,1026                                           DISPOSIZIONE BONIFICO - SCT Coordi"
+  ))
+})

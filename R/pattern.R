@@ -116,6 +116,28 @@ pattern_summary <- function() {
   )
 }
 
-pattern_transaction <- function() "^62"
+pattern_transaction <- function() {
+  paste0(
+    "^62", # Record type (transaction)
+    "\\d{7}", # Sequential record number (7 digits)
+    "\\d{3}", # Transaction number (3 digits)
+    "\\d{6}", # Transaction date DDMMYY (6 digits)
+    "\\d{6}", # Value date DDMMYY (6 digits)
+    "[CD]", # Debit/Credit flag (C or D)
+    "\\d{9,15}", # Amount with implied decimals (9-15 digits)
+    ",?\\d{0,2}", # Optional comma and decimals
+    "\\d{2}", # Transaction code (2 digits)
+    ".*", # Description text (variable length)
+    "$"
+  )
+}
 
-pattern_continuation <- function() "^63\\d{7}"
+pattern_continuation <- function() {
+  paste0(
+    "^63", # Record type (continuation)
+    "\\d{7}", # Sequential record number (7 digits)
+    "\\d{3}", # Transaction number (3 digits) - links to parent 62
+    ".*", # Continuation text (variable length)
+    "$"
+  )
+}

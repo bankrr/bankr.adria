@@ -54,9 +54,9 @@ is_footer_record <- function(x) {
   grepl(pattern_footer(), x)
 }
 
-# Starting record ----
+# Transaction record ----
 
-is_starting_record <- function(x) {
+is_transaction <- function(x) {
   grepl(pattern_transaction(), x)
 }
 
