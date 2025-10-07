@@ -99,9 +99,10 @@ pattern_summary <- function() {
   paste0(
     "^\\s?61", # Record type (opening balance)
     "\\d{7}", # Progressive number (7 digits)
-    "\\s*", # Spaces
-    "\\d{7}", # Sequential number (7 digits)
-    "\\s*", # Spaces
+    "\\s+", # Spaces (one or more)
+    "\\d{7}", # Sequential number (7 digits, e.g., 0000093)
+    "\\d{3}", # More digits (3 digits, e.g., 001)
+    "\\s+", # Spaces (one or more)
     "[A-Z0-9]{3}", # Account type code (3 chars)
     "\\d{5}", # Bank code (5 digits)
     "\\d{5}", # Branch code (5 digits)
@@ -109,8 +110,8 @@ pattern_summary <- function() {
     "[A-Z]{3}", # Currency code (3 letters)
     "\\d{6}", # Date DDMMYY (6 digits)
     "[CD]", # Debit/Credit flag (C or D)
-    "\\d{13,15}", # Balance amount (13-15 digits)
-    "[A-Z]{2}", # Country code (2 letters)
+    "\\d{9,15},\\d{2}", # Balance amount with comma (9-15 digits, comma, 2 decimals)
+    "[A-Z]{2}\\d{2}", # Country code (2 letters) + numbers (2 digits)
     "\\s*", # Optional trailing spaces
     "$"
   )
