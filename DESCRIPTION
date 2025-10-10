@@ -1,4 +1,4 @@
-Package: bankr.bancadria
+Package: bankr.adria
 Title: Reads and Tidy Bank Statements from Banca Adria
 Version: 0.1.0
 Authors@R: 

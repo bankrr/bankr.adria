@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/articles/special-files.html
 
 library(testthat)
-library(bankr.bancadria)
+library(bankr.adria)
 
-test_check("bankr.bancadria")
+test_check("bankr.adria")
