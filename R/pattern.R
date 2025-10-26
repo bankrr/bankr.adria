@@ -95,26 +95,76 @@ pattern_footer_detailed <- function() {
   )
 }
 
-pattern_summary <- function() {
-  paste0(
-    "^\\s?61", # Record type (opening balance)
-    "\\d{7}", # Progressive number (7 digits)
-    "\\s+", # Spaces (one or more)
-    "\\d{7}", # Sequential number (7 digits, e.g., 0000093)
-    "\\d{3}", # More digits (3 digits, e.g., 001)
-    "\\s+", # Spaces (one or more)
-    "[A-Z0-9]{3}", # Account type code (3 chars)
-    "\\d{5}", # Bank code (5 digits)
-    "\\d{5}", # Branch code (5 digits)
-    "\\d{12}", # Account number (12 digits)
-    "[A-Z]{3}", # Currency code (3 letters)
-    "\\d{6}", # Date DDMMYY (6 digits)
-    "[CD]", # Debit/Credit flag (C or D)
-    "\\d{9,15},\\d{2}", # Balance amount with comma (9-15 digits, comma, 2 decimals)
-    "[A-Z]{2}\\d{2}", # Country code (2 letters) + numbers (2 digits)
-    "\\s*", # Optional trailing spaces
-    "$"
-  )
+pattern_summary <- function(capture = FALSE) {
+  p <- pattern_components()
+
+  if (capture) {
+    paste0(
+      "^\\s?",
+      p$record_type_summary,
+      "(?<progressive_number>",
+      p$progressive_number,
+      ")",
+      "\\s+",
+      "(?<sequential_number>",
+      p$sequential_number,
+      ")",
+      "(?<transaction_counter>",
+      p$transaction_counter,
+      ")",
+      "\\s+",
+      "(?<account_type>",
+      p$account_type,
+      ")",
+      "(?<bank_code>",
+      p$bank_code,
+      ")",
+      "(?<branch_code>",
+      p$branch_code,
+      ")",
+      "(?<account_number>",
+      p$account_number,
+      ")",
+      "(?<currency>",
+      p$currency_code,
+      ")",
+      "(?<date>",
+      p$transaction_date,
+      ")",
+      "(?<debit_credit>",
+      p$debit_credit_flag,
+      ")",
+      "(?<balance>",
+      p$balance_amount,
+      ")",
+      "(?<country_code>",
+      p$country_code,
+      ")",
+      "\\s*",
+      "$"
+    )
+  } else {
+    paste0(
+      "^\\s?",
+      p$record_type_summary,
+      p$progressive_number,
+      "\\s+",
+      p$sequential_number,
+      p$transaction_counter,
+      "\\s+",
+      p$account_type,
+      p$bank_code,
+      p$branch_code,
+      p$account_number,
+      p$currency_code,
+      p$transaction_date,
+      p$debit_credit_flag,
+      p$balance_amount,
+      p$country_code,
+      "\\s*",
+      "$"
+    )
+  }
 }
 
 pattern_components <- function() {
@@ -126,6 +176,7 @@ pattern_components <- function() {
     # Transaction-specific components
     record_type_transaction = "62", # Record type (transaction)
     record_type_continuation = "63", # Record type (continuation)
+    record_type_summary = "61", # Record type (opening balance)
     transaction_date = "\\d{6}", # Transaction date DDMMYY (6 digits)
     value_date = "\\d{6}", # Value date DDMMYY (6 digits)
     debit_credit_flag = "[CD]", # Debit/Credit flag (C or D)
@@ -133,7 +184,19 @@ pattern_components <- function() {
     optional_decimals = ",?\\d{0,2}", # Optional comma and decimals
     transaction_code = "\\d{2}", # Transaction code (2 digits)
     description = ".*", # Description text (variable length)
-    continuation_text = ".*" # Continuation text (variable length)
+    continuation_text = ".*", # Continuation text (variable length)
+
+    # Summary-specific components
+    progressive_number = "\\d{7}", # Progressive number (7 digits)
+    sequential_number = "\\d{7}", # Sequential number (7 digits)
+    transaction_counter = "\\d{3}", # Transaction counter (3 digits)
+    account_type = "[A-Z0-9]{3}", # Account type code (3 chars)
+    bank_code = "\\d{5}", # Bank code (5 digits)
+    branch_code = "\\d{5}", # Branch code (5 digits)
+    account_number = "\\d{12}", # Account number (12 digits)
+    currency_code = "[A-Z]{3}", # Currency code (3 letters)
+    balance_amount = "\\d{9,15},\\d{2}", # Balance amount with comma
+    country_code = "[A-Z]{2}\\d{2}" # Country code + numbers
   )
 }
 
