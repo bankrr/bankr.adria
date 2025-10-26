@@ -12,7 +12,11 @@ test_that("tidy_cbi works", {
       "DISPOSIZIONE BONIFICO - SCT Coordinate benef: IT68J0898262310034000001509 A fav: Iconomadigimon srl - Via Xyz Conchig, 6/7 - Abano Terme ID.MSG.:ee1ZSwwP04062025095841 ID.END TO END:040625-094419-1-31-D001 RICON.1.: Fatt. FPR 682/25",
       "Ordinante: AIRPLANE OBLOT Causale:ACCREDITO BONIFICO - SCT Rata extra 2024/2025 a Saldo 5913865620100000480160062680IT Data ordine: 11/06/2025 IBAN ordinante: IT89S0307501603CC8009118233 Indirizzo ordinante: VIA XYZ DELAINE 1-A - MONTEGROTTO TERMEID End to End: NOTPROVIDED"
     ),
-    amount = c(-456.1, -1294.88, 211.26)
+    amount = c(-456.1, -1294.88, 211.26),
+    cin = c("A", "A", "A"),
+    bank_code = c("08982", "08982", "08982"),
+    branch_code = c("62320", "62320", "62320"),
+    account_number = c("034000000459", "034000000459", "034000000459")
   )
   expect_equal(as.data.frame(dat), dat_expected)
 })

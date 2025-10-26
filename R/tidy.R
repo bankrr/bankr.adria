@@ -67,9 +67,16 @@ tidy <- function(dat) {
 tidy_cbi <- function(x) {
   stopifnot(is.character(x))
 
+  # Extract account info from summary record
+  summary_record <- x[is_summary(x)]
   trans <- x[is_transaction(x) | is_continuation(x)]
+
   dat <- data.frame(
     id = xtr_record_number(trans),
+    cin = xtr_cin(summary_record),
+    bank_code = xtr_bank_code(summary_record),
+    branch_code = xtr_branch_code(summary_record),
+    account_number = xtr_account_number(summary_record),
     date_transaction = as_date(xtr_transaction_date(trans)),
     date_value = as_date(xtr_value_date(trans)),
     credit_debit = xtr_debit_credit(trans),
