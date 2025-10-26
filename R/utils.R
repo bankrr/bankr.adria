@@ -14,8 +14,20 @@ xtr_match <- function(text, pattern) {
 flatten <- function(dat) {
   stopifnot(is.data.frame(dat))
   aggregate(
-    dat[, setdiff(names(dat), "id"), drop = FALSE],
-    by = list(id = dat$id),
+    dat[,
+      setdiff(
+        names(dat),
+        c("id", "cin", "bank_code", "branch_code", "account_number")
+      ),
+      drop = FALSE
+    ],
+    by = list(
+      id = dat$id,
+      cin = dat$cin,
+      bank_code = dat$bank_code,
+      branch_code = dat$branch_code,
+      account_number = dat$account_number
+    ),
     FUN = function(x) {
       # TODO: too general
       if (is.character(x)) {
