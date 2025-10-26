@@ -55,6 +55,48 @@ is_continuation <- function(x) {
   grepl(pattern_continuation(), x)
 }
 
+# Extract summary fields ----
+
+xtr_cin <- function(x) {
+  matches <- xtr_match(x, pattern_summary(capture = TRUE))
+  chr_ply(
+    matches,
+    function(m) {
+      if ("cin" %in% names(m)) m[["cin"]] else NA_character_
+    }
+  )
+}
+
+xtr_bank_code <- function(x) {
+  matches <- xtr_match(x, pattern_summary(capture = TRUE))
+  chr_ply(
+    matches,
+    function(m) {
+      if ("bank_code" %in% names(m)) m[["bank_code"]] else NA_character_
+    }
+  )
+}
+
+xtr_branch_code <- function(x) {
+  matches <- xtr_match(x, pattern_summary(capture = TRUE))
+  chr_ply(
+    matches,
+    function(m) {
+      if ("branch_code" %in% names(m)) m[["branch_code"]] else NA_character_
+    }
+  )
+}
+
+xtr_account_number <- function(x) {
+  matches <- xtr_match(x, pattern_summary(capture = TRUE))
+  chr_ply(
+    matches,
+    function(m) {
+      if ("account_number" %in% names(m)) m[["account_number"]] else NA_character_
+    }
+  )
+}
+
 # Extract transaction fields ----
 
 xtr_record_number <- function(x) {
