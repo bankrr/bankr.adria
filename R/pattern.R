@@ -116,6 +116,9 @@ pattern_summary <- function(capture = FALSE) {
       "(?<account_type>",
       p$account_type,
       ")",
+      "(?<cin>",
+      p$cin,
+      ")",
       "(?<bank_code>",
       p$bank_code,
       ")",
@@ -153,6 +156,7 @@ pattern_summary <- function(capture = FALSE) {
       p$transaction_counter,
       "\\s+",
       p$account_type,
+      p$cin,
       p$bank_code,
       p$branch_code,
       p$account_number,
@@ -190,9 +194,10 @@ pattern_components <- function() {
     progressive_number = "\\d{7}", # Progressive number (7 digits)
     sequential_number = "\\d{7}", # Sequential number (7 digits)
     transaction_counter = "\\d{3}", # Transaction counter (3 digits)
-    account_type = "[A-Z0-9]{3}", # Account type code (3 chars)
-    bank_code = "\\d{5}", # Bank code (5 digits)
-    branch_code = "\\d{5}", # Branch code (5 digits)
+    account_type = "[A-Z0-9]{2}", # Account type code (2 chars)
+    cin = "[A-Z]", # CIN - Carattere di controllo nazionale (1 letter)
+    bank_code = "\\d{5}", # Bank code / ABI (5 digits)
+    branch_code = "\\d{5}", # Branch code / CAB (5 digits)
     account_number = "\\d{12}", # Account number (12 digits)
     currency_code = "[A-Z]{3}", # Currency code (3 letters)
     balance_amount = "\\d{9,15},\\d{2}", # Balance amount with comma
