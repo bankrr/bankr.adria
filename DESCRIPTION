@@ -1,14 +1,14 @@
 Package: bankr.adria
 Title: Reads and Tidy Bank Statements from Banca Adria
-Version: 0.2.0
-Authors@R: 
+Version: 0.3.0
+Authors@R:
     person("Andrea", "Ranzato", , "andrea.ranzato01@gmail.com", role = c("aut", "cre"))
-Description: Reads and Tidy Bank Statements from Banca Adria.
+Description: Reads and tidies CSV-format bank statements from Banca Adria.
 License: MIT + file LICENSE
 Imports:
     stats,
     utils
-Suggests: 
+Suggests:
     testthat (>= 3.0.0),
     tibble
 Config/testthat/edition: 3
