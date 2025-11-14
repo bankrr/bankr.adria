@@ -3,8 +3,6 @@
 export(chr_ply)
 export(lgl_ply)
 export(read)
-export(read_cbi)
 export(tidy)
-export(tidy_cbi)
 importFrom(stats,aggregate)
 importFrom(utils,read.csv2)

@@ -6,7 +6,7 @@
 \alias{bankr.adria-package}
 \title{bankr.adria: Reads and Tidy Bank Statements from Banca Adria}
 \description{
-Reads and Tidy Bank Statements from Banca Adria.
+Reads and tidies CSV-format bank statements from Banca Adria.
 }
 \author{
 \strong{Maintainer}: Andrea Ranzato \email{andrea.ranzato01@gmail.com}
