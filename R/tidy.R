@@ -9,8 +9,8 @@ tidy <- function(dat) {
 
   dat_sub <- dat[, setdiff(colnames(dat), "x_1")]
 
-  dat_sub[["data"]] <- as.Date(dat_sub[["data"]], format = "%d/%m/%Y")
-  dat_sub[["valuta"]] <- as.Date(dat_sub[["valuta"]], format = "%d/%m/%Y")
+  dat_sub[["data"]] <- date_from_dmy(dat_sub[["data"]])
+  dat_sub[["valuta"]] <- date_from_dmy(dat_sub[["valuta"]])
 
   # Clean DARE column: remove dots, replace comma with dot
   if ("dare" %in% colnames(dat_sub)) {
