@@ -6,8 +6,11 @@ Authors@R:
 Description: Reads and tidies CSV-format bank statements from Banca Adria.
 License: MIT + file LICENSE
 Imports:
+    bankr.utils,
     stats,
     utils
+Remotes:
+    bankrr/bankr.utils
 Suggests:
     testthat (>= 3.0.0),
     tibble
