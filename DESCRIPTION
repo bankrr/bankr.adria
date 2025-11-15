@@ -1,6 +1,6 @@
 Package: bankr.adria
 Title: Reads and Tidy Bank Statements from Banca Adria
-Version: 0.3.0
+Version: 0.3.1
 Authors@R:
     person("Andrea", "Ranzato", , "andrea.ranzato01@gmail.com", role = c("aut", "cre"))
 Description: Reads and tidies CSV-format bank statements from Banca Adria.
