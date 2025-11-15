@@ -1,4 +1,4 @@
-test_that("multiplication works", {
+test_that("tidy works", {
   dat <- read(
     pkg_file("testdata", "transactions.csv")
   )
