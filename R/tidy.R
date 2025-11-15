@@ -5,12 +5,11 @@ tidy <- function(dat) {
   validate(dat)
   colnames(dat) <- tolower(colnames(dat))
   colnames(dat)[colnames(dat) == "x"] <- "currency"
-  colnames(dat)[colnames(dat) == "data"] <- "date"
   colnames(dat) <- sub("\\.", "_", colnames(dat))
 
   dat_sub <- dat[, setdiff(colnames(dat), "x.1")]
 
-  dat_sub[["date"]] <- as.Date(dat_sub[["date"]], format = "%d/%m/%Y")
+  dat_sub[["data"]] <- as.Date(dat_sub[["data"]], format = "%d/%m/%Y")
   dat_sub[["valuta"]] <- as.Date(dat_sub[["valuta"]], format = "%d/%m/%Y")
 
   # Clean DARE column: remove dots, replace comma with dot
@@ -59,4 +58,3 @@ tidy <- function(dat) {
 
   dat_sub
 }
-
