@@ -10,30 +10,28 @@ validate <- function(dat) {
     X.1 = "logical"
   )
 
-  # Use bankr.utils validation functions
   validate_is_dataframe(dat)
   validate_has_rows(dat)
   validate_required_columns(dat, expected_cols)
   validate_no_extra_columns(dat, expected_cols)
   validate_column_types(dat, expected_cols)
 
-  # Validate date format for DATA and VALUTA columns
-  date_pattern <- "^(\\d{2}/\\d{2}/\\d{4}|)$"
-
   if ("DATA" %in% colnames(dat)) {
-    invalid_data <- !grepl(date_pattern, dat[["DATA"]], perl = TRUE)
+    invalid_data <- !validate_date_format_dmy(dat[["DATA"]], allow_empty = TRUE)
     if (any(invalid_data)) {
       stop(
-        "Column 'DATA' contains invalid date formats. Expected DD/MM/YYYY or empty string."
+        "Column 'DATA' contains invalid date formats. Expected DD/MM/YYYY or empty string.",
+        call. = FALSE
       )
     }
   }
 
   if ("VALUTA" %in% colnames(dat)) {
-    invalid_valuta <- !grepl(date_pattern, dat[["VALUTA"]], perl = TRUE)
+    invalid_valuta <- !validate_date_format_dmy(dat[["VALUTA"]], allow_empty = TRUE)
     if (any(invalid_valuta)) {
       stop(
-        "Column 'VALUTA' contains invalid date formats. Expected DD/MM/YYYY or empty string."
+        "Column 'VALUTA' contains invalid date formats. Expected DD/MM/YYYY or empty string.",
+        call. = FALSE
       )
     }
   }
