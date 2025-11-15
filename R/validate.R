@@ -128,5 +128,5 @@ validate <- function(dat) {
     }
   }
 
-  invisible(TRUE)
+  invisible(dat)
 }

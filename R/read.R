@@ -9,5 +9,7 @@ read <- function(path) {
   if (!file.exists(path)) {
     stop("File does not exist.")
   }
-  read.csv2(path)
+  dat <- read.csv2(path)
+  out <- validate(dat)
+  out
 }
