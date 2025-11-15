@@ -7,7 +7,7 @@ tidy <- function(dat) {
   colnames(dat)[colnames(dat) == "x"] <- "currency"
   colnames(dat) <- sub("\\.", "_", colnames(dat))
 
-  dat_sub <- dat[, setdiff(colnames(dat), "x.1")]
+  dat_sub <- dat[, setdiff(colnames(dat), "x_1")]
 
   dat_sub[["data"]] <- as.Date(dat_sub[["data"]], format = "%d/%m/%Y")
   dat_sub[["valuta"]] <- as.Date(dat_sub[["valuta"]], format = "%d/%m/%Y")
