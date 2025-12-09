@@ -7,8 +7,13 @@ tidy <- function(dat) {
   colnames(dat) <- sub("\\.", "_", colnames(dat))
   validate(dat)
   colnames(dat) <- tolower(colnames(dat))
-  colnames(dat)[colnames(dat) == "x"] <- "currency"
-  colnames(dat) <- sub("\\.", "_", colnames(dat))
+  if ("x" %in% colnames(dat)) {
+    colnames(dat)[colnames(dat) == "x"] <- "currency"
+  }
+  if ("divisa" %in% colnames(dat)) {
+    colnames(dat)[colnames(dat) == "divisa"] <- "currency"
+  }
+
 
   dat_sub <- dat[, setdiff(colnames(dat), "x_1")]
 
