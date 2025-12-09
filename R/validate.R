@@ -5,14 +5,22 @@ validate <- function(dat) {
     DARE = "logical",
     AVERE = "character",
     X = "character",
-    DESCRIZIONE.OPERAZIONE = "character",
-    CAUSALE.ABI = "integer",
-    X.1 = "logical"
+    DIVISA = "character",
+    DESCRIZIONE_OPERAZIONE = "character",
+    CAUSALE_ABI = "integer",
+    X_1 = "logical"
   )
 
   validate_is_dataframe(dat)
   validate_has_rows(dat)
-  validate_required_columns(dat, expected_cols)
+  currency <- c("X", "DIVISA")
+  if (!any(currency %in% colnames(dat))) {
+    stop(
+      "At least one column between 'X' and 'DIVISA' is expected.",
+      call. = FALSE
+    )
+  }
+  validate_required_columns(dat, setdiff(expected_cols, currency))
   validate_no_extra_columns(dat, expected_cols)
   validate_column_types(dat, expected_cols)
 
@@ -73,7 +81,7 @@ validate <- function(dat) {
   }
 
   # Check that required columns don't contain NA values
-  required_no_na_cols <- c("DATA", "AVERE", "DESCRIZIONE.OPERAZIONE")
+  required_no_na_cols <- c("DATA", "AVERE", "DESCRIZIONE_OPERAZIONE")
   validate_no_na_columns(dat, required_no_na_cols)
 
   # Validate X column contains only "EUR"
