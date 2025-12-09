@@ -5,6 +5,7 @@ tidy <- function(dat) {
   # Standardize column names before validation to make it easier.
   # For instance, columns can appear as DESCRIZIONE.OPERAZIONE or DESCRIZIONE_OPERAZIONE.
   colnames(dat) <- sub("\\.", "_", colnames(dat))
+  validate(dat)
   colnames(dat) <- tolower(colnames(dat))
   if ("x" %in% colnames(dat)) {
     colnames(dat)[colnames(dat) == "x"] <- "currency"
